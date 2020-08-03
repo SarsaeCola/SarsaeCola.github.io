@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>SarsaeCola</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="黄梓良的私人博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SarsaeCola">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="SarsaeCola">
+<meta property="og:description" content="黄梓良的私人博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="sarsae">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="SarsaeCola" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SarsaeCola</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Mysql子查询" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/16/Mysql%E5%AD%90%E6%9F%A5%E8%AF%A2/" class="article-date">
+  <time datetime="2020-07-16T02:07:24.000Z" itemprop="datePublished">2020-07-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/16/Mysql%E5%AD%90%E6%9F%A5%E8%AF%A2/">Mysql子查询</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>含义：出现在其它语句中的select语句，称为子查询或内查询，；外部的查询语句，称为主查询或外查询。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>子查询放在小括号内</li>
+<li>子查询一般放在条件的右侧</li>
+<li>标量子查询一般搭配着单行操作符使用：&gt; &lt; &gt;= &lt;= = &lt;&gt;</li>
+<li>列子查询一般搭配多行操作符使用：in，any/some，all</li>
+<li>子查询的执行优先于主查询执行<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h3 id="按子查询出现的位置："><a href="#按子查询出现的位置：" class="headerlink" title="按子查询出现的位置："></a>按子查询出现的位置：</h3></li>
+<li>SELECT后面（仅仅支持标量子查询）</li>
+<li>FROM后面（支持表子查询）</li>
+<li>WHERE或HAVING后面（支持标量子查询，列子查询，行子查询）</li>
+<li>EXISTS后面（相关子查询）（支持表子查询）<h3 id="按结果集的行列数不同："><a href="#按结果集的行列数不同：" class="headerlink" title="按结果集的行列数不同："></a>按结果集的行列数不同：</h3></li>
+<li>标量子查询（结果集只有一行一列）</li>
+<li>列子查询（结果集有一列多行）</li>
+<li>行子查询（结果集有一行多列或多行多列）</li>
+<li>表子查询（结果集有多行多列）</li>
+</ul>
+<h2 id="where和having后面"><a href="#where和having后面" class="headerlink" title="where和having后面"></a>where和having后面</h2><ul>
+<li>标量子查询<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查询谁的工资比Abel高</span></span><br><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> salary&gt;(</span><br><span class="line">    <span class="keyword">SELECT</span> salary</span><br><span class="line">    <span class="keyword">FROM</span> employees</span><br><span class="line">    <span class="keyword">WHERE</span> last_name=<span class="string">&#x27;Abel&#x27;</span>);</span><br></pre></td></tr></table></figure></li>
+<li>列子查询</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IN/NOT IN</td>
+<td>等于列表中的任意一个</td>
+</tr>
+<tr>
+<td>ANY/SOME</td>
+<td>和子查询返回的某一个值比较</td>
+</tr>
+<tr>
+<td>ALL</td>
+<td>和子查询返回的所有值比较</td>
+</tr>
+</tbody></table>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#返回location_id是1400或1700的部门中的所有员工的姓名</span></span><br><span class="line"><span class="keyword">SELECT</span> last_name</span><br><span class="line"><span class="keyword">FROM</span> department_id <span class="keyword">IN</span>(</span><br><span class="line">    <span class="keyword">SELECT</span> department_id</span><br><span class="line">    <span class="keyword">FROM</span> departments</span><br><span class="line">    <span class="keyword">WHERE</span> location_id <span class="keyword">IN</span> (<span class="number">1400</span>,<span class="number">1700</span>)</span><br><span class="line">);</span><br><span class="line"><span class="comment">#返回其它部门中比job_id以为‘IT_PROG’部门任一工资低的员工的信息</span></span><br><span class="line"><span class="keyword">SELECT</span>　＊</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> salary&lt;<span class="keyword">ANY</span>(</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> salary</span><br><span class="line">    <span class="keyword">FROM</span> employees</span><br><span class="line">    <span class="keyword">WHERE</span> job_id=<span class="string">&#x27;IT_PROG&#x27;</span></span><br><span class="line">) <span class="keyword">AND</span> job_id&lt;&gt;<span class="string">&#x27;IT_PROG&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>行子查询<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> (employees_id,salary)=(</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">MIN</span>(emplyees_id),<span class="keyword">MAX</span>(salary)</span><br><span class="line">    <span class="keyword">FROM</span> employees</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="在select后面"><a href="#在select后面" class="headerlink" title="在select后面"></a>在select后面</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查询每个部门的员工的个数</span></span><br><span class="line"><span class="keyword">SELECT</span> d.*,(</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*)</span><br><span class="line">    <span class="keyword">FROM</span> employees e</span><br><span class="line">    <span class="keyword">WHERE</span> e.department_id=d.<span class="string">`department_id`</span></span><br><span class="line">) 个数</span><br><span class="line"><span class="keyword">FROM</span> departments d;</span><br></pre></td></tr></table></figure>
+
+<h2 id="from后面"><a href="#from后面" class="headerlink" title="from后面"></a>from后面</h2><p><strong>返回的是一张表，使用时要起别名</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查询每个部门的平均工资的工资等级</span></span><br><span class="line"><span class="keyword">SELECT</span> ag_dep.*,g.<span class="string">`grade_level`</span></span><br><span class="line"><span class="keyword">FROM</span>(</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">AVG</span>(salary) ag,department_id</span><br><span class="line">    <span class="keyword">FROM</span> employees</span><br><span class="line">    <span class="keyword">GROUP</span> <span class="keyword">BY</span> department_id</span><br><span class="line">) ag_dep</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> job_grades g</span><br><span class="line"><span class="keyword">ON</span> ag_dep.ag <span class="keyword">BETWEEN</span> lowest_sal <span class="keyword">AND</span> highest_sal;</span><br></pre></td></tr></table></figure>
+
+<h2 id="exists后面（相关子查询）"><a href="#exists后面（相关子查询）" class="headerlink" title="exists后面（相关子查询）"></a>exists后面（相关子查询）</h2><p>根据是否存在，返回0/1（存在1，不存在0）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查询有员工的部门名</span></span><br><span class="line"><span class="keyword">SELECT</span> deparment_name</span><br><span class="line"><span class="keyword">FROM</span> department d</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">EXISTS</span>(</span><br><span class="line">    <span class="keyword">SELECT</span> * </span><br><span class="line">    <span class="keyword">FROM</span> employees e</span><br><span class="line">    <span class="keyword">WHERE</span> d.<span class="string">&#x27;department_id`=e.`deparment_id`</span></span><br><span class="line"><span class="string">);</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/07/16/Mysql%E5%AD%90%E6%9F%A5%E8%AF%A2/" data-id="ckdep5w7s000fgov69t3r4y75" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Mysql连接查询" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/11/Mysql%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" class="article-date">
+  <time datetime="2020-07-11T02:57:25.000Z" itemprop="datePublished">2020-07-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/11/Mysql%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/">Mysql连接查询</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>含义</strong>:连接查询又称多表查询，当查询的字段来自于多个表时，就会用到连接查询<br>内连接（inner join）：取出两张表中匹配到的数据，匹配不到的不保留<br>外连接（outer join）：取出连接表中匹配到的数据，匹配不到的也会保留，其值为NULL</p>
+<h1 id="内连接"><a href="#内连接" class="headerlink" title="内连接"></a>内连接</h1><p><img src="Mysql%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/2020-07-13-11-07-25.png"> </p>
+<h2 id="等值连接"><a href="#等值连接" class="headerlink" title="等值连接"></a>等值连接</h2><p>等值连接（连接条件中的运算符为“=”）</br>举例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Student,SC </span><br><span class="line"><span class="keyword">WHERE</span> (Student.Sno=SC.Sno);</span><br></pre></td></tr></table></figure>
+<h2 id="非等值连接"><a href="#非等值连接" class="headerlink" title="非等值连接"></a>非等值连接</h2><p>连接条件中的运算符不是“=”</br>举例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> salary,grade_level</span><br><span class="line"><span class="keyword">FROM</span> employees e,job_grade g</span><br><span class="line"><span class="keyword">WHERE</span> salary <span class="keyword">BETWEEN</span> g.<span class="string">`lowest_sal`</span> <span class="keyword">AND</span> g.<span class="string">`highest_sal`</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="自连接"><a href="#自连接" class="headerlink" title="自连接"></a>自连接</h2><p>表本身和自己连接</br>举例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> e.employee_id,e.last_name,m.employee_id,m.last_name</span><br><span class="line"><span class="keyword">FROM</span> employees e,employees m</span><br><span class="line"><span class="keyword">WHERE</span> e.<span class="string">`manager_id`</span>=m.<span class="string">`employee_id`</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="自然连接（在等值连接中去除重复的属性列）"><a href="#自然连接（在等值连接中去除重复的属性列）" class="headerlink" title="自然连接（在等值连接中去除重复的属性列）"></a>自然连接（在等值连接中去除重复的属性列）</h2><p>举例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> student.sno,sname,cno,grade</span><br><span class="line"><span class="keyword">FROM</span> Student,SC </span><br><span class="line"><span class="keyword">WHERE</span> (Student.Sno=SC.Sno);</span><br></pre></td></tr></table></figure>
+
+<h1 id="外连接"><a href="#外连接" class="headerlink" title="外连接"></a>外连接</h1><p>语法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 查询列表</span><br><span class="line"><span class="keyword">FROM</span> 表<span class="number">1</span> 别名 [连接类型]</span><br><span class="line"><span class="keyword">JOIN</span> 表<span class="number">2</span> 别名</span><br><span class="line"><span class="keyword">ON</span> 连接条件</span><br><span class="line">[<span class="keyword">WHERE</span> 筛选条件]</span><br><span class="line">[<span class="keyword">GROUP</span> <span class="keyword">BY</span> 分组]</span><br><span class="line">[<span class="keyword">HAVING</span> 筛选条件]</span><br><span class="line">[<span class="keyword">ORDER</span> <span class="keyword">BY</span> 排序]</span><br></pre></td></tr></table></figure>
+<h2 id="左外连接-LEFT-OUTER"><a href="#左外连接-LEFT-OUTER" class="headerlink" title="左外连接(LEFT [OUTER])"></a>左外连接(LEFT [OUTER])</h2><p><img src="Mysql%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/2020-07-13-11-11-03.png"></p>
+<h2 id="右外连接-RIGHT-OUTER"><a href="#右外连接-RIGHT-OUTER" class="headerlink" title="右外连接(RIGHT [OUTER])"></a>右外连接(RIGHT [OUTER])</h2><p><img src="Mysql%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/2020-07-13-11-11-32.png"></p>
+<h2 id="全外连接-FULL-OUTER"><a href="#全外连接-FULL-OUTER" class="headerlink" title="全外连接(FULL [OUTER])"></a>全外连接(FULL [OUTER])</h2><p>关键字：union /union all</p>
+<p>语句：(select colum1,colum2…columN from tableA ) union (select colum1,colum2…columN from tableB )</p>
+<p>         或 (select colum1,colum2…columN from tableA ) union all (select colum1,colum2…columN from tableB )；</p>
+<p>union语句注意事项：</p>
+<p>         1.通过union连接的SQL它们分别单独取出的列数必须相同；</p>
+<p>         2.不要求合并的表列名称相同时，以第一个sql 表列名为准；</p>
+<p>         3.使用union 时，完全相等的行，将会被合并，由于合并比较耗时，一般不直接使用 union 进行合并，而是通常采用union all 进行合并；</p>
+<p>         4.被union 连接的sql 子句，单个子句中不用写order by ，因为不会有排序的效果。但可以对最终的结果集进行排序；</p>
+<p>           (select id,name from A order by id) union all (select id,name from B order by id); //没有排序效果</p>
+<p>           (select id,name from A ) union all (select id,name from B ) order by id; //有排序效果<br><img src="Mysql%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/2020-07-13-11-14-09.png"></p>
+<h1 id="交叉连接"><a href="#交叉连接" class="headerlink" title="交叉连接"></a>交叉连接</h1><p>交叉连接返回的结果，是被连接的两个表中所有数据行的笛卡尔积，也就是返回第一个表中符合查询条件的数据行数，乘以第二个表中符合查询条件的数据行数</br><br>CROSS JOIN，用于连接两个要查询的表，通过该语句，可以查询两个表中所有的数据组合</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/07/11/Mysql%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" data-id="ckdep5w7t000ggov69ggtgk0d" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Mysql分组查询" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/11/Mysql%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2/" class="article-date">
+  <time datetime="2020-07-11T02:01:59.000Z" itemprop="datePublished">2020-07-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/11/Mysql%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2/">Mysql分组查询</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 分组函数，列（要求出现在<span class="keyword">group</span> <span class="keyword">by</span>的后面）</span><br><span class="line"><span class="keyword">FROM</span> 表</span><br><span class="line">[<span class="keyword">WHERE</span> 分组前的筛选条件]</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> 分组的列(多选)</span><br><span class="line">[<span class="keyword">HAVING</span> 分组后的筛选条件]</span><br><span class="line">[<span class="keyword">ORDER</span> <span class="keyword">BY</span> 子句]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>案例1<blockquote>
+<p>查询每个工种有奖金的员工的最高工资&gt;12000的工种编号和最高工资</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MAX</span>(salary),job_id</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> commission_pct <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="literal">NULL</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> job_id</span><br><span class="line"><span class="keyword">HAVING</span> <span class="keyword">MAX</span>(salary)&gt;<span class="number">12000</span>;</span><br></pre></td></tr></table></figure></li>
+<li>案例2<blockquote>
+<p>查询每个部门每个工种的员工的平均工资，并且按照平均工资的高低显示</p>
+</blockquote>
+<pre><code class="sql">SELECT AVG(salary) a,department_id,job_id
+FROM employees
+WHERE department_id IS NOT NULL
+GROUP BY job_id,department_id
+ORDER BY a DESC;</code></pre>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/07/11/Mysql%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2/" data-id="ckdep5w7m0004gov6fbqdang6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Mysql常用函数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/10/Mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/" class="article-date">
+  <time datetime="2020-07-10T01:31:54.000Z" itemprop="datePublished">2020-07-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/10/Mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">Mysql常用函数</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="单行函数"><a href="#单行函数" class="headerlink" title="单行函数"></a>单行函数</h1><h2 id="字符函数"><a href="#字符函数" class="headerlink" title="字符函数"></a>字符函数</h2><ul>
+<li>length函数<blockquote>
+<p>用于获取值的字节长度，具体要看使用的字符集</br>SELECT(‘John’)/SELECT(‘张三丰haha’)</p>
+</blockquote>
+</li>
+<li>concat函数<blockquote>
+<p>用于拼接字符串</br>SELECT CONCAT(last_name,’_’,first_name) 姓名 from employee</p>
+</blockquote>
+</li>
+<li>upper/lower函数<blockquote>
+<p>将英文字符转变成大写或者小写</br>UPPER(last_name)</p>
+</blockquote>
+</li>
+<li>substr,substring函数(有多种重载类型)<blockquote>
+<p><strong>索引从1开始</strong></br>SUBSTR(str,pos),从pos出截取到字符串尾部</br>SUBSTR(str,pos,len)，从pos处截取指定长度的字串</br></p>
+</blockquote>
+</li>
+<li>instr函数<blockquote>
+<p>instr(str,substr)返回substr在str中的起始索引,找不到则返回0</p>
+</blockquote>
+</li>
+<li>trim函数<blockquote>
+<p>TRIM(str)去掉字符串的前后空格</br>TRIM(char FROM str)去掉str前后的指定的字符char，如SELECT TRIM(‘a’ FROM ‘aaaaaxxxaaayyyaaaa’) 结果是’xxxaaayyy’如果char是’aa’则结果是’axxxaaayyy’</br></p>
+</blockquote>
+</li>
+<li>lpad函数<blockquote>
+<p>lpad(str,len,char)用指定字符左填充字符串到指定长度，并返回指定长度的字串，指定长度小于原字串则会实现截取效果。</p>
+</blockquote>
+</li>
+<li>replace函数<blockquote>
+<p>replace(str,substr1,substr2)用substr2替换str中<strong>全部的</strong>substr1</p>
+</blockquote>
+<h2 id="数学函数"><a href="#数学函数" class="headerlink" title="数学函数"></a>数学函数</h2></li>
+<li>round函数<blockquote>
+<p>round(X)四舍五入到个位</br>round(X,D)四舍五入到小数点后第D位</p>
+</blockquote>
+</li>
+<li>ceil函数/floor函数<blockquote>
+<p>ceil（X）向上取整/floor(X)向下取整</p>
+</blockquote>
+</li>
+<li>truncate函数<blockquote>
+<p>truancate(X,D)截断小数点后指定位数</br>truncate（1.6999，1）返回1.6</p>
+</blockquote>
+</li>
+<li>mod函数<blockquote>
+<p>MOD（X，D）取余</p>
+</blockquote>
+</li>
+<li>rand函数<blockquote>
+<p>返回0~1之间的随机小数.</p>
+</blockquote>
+<h2 id="日期函数"><a href="#日期函数" class="headerlink" title="日期函数"></a>日期函数</h2><table>
+<thead>
+<tr>
+<th align="left">序号</th>
+<th align="left">格式符</th>
+<th align="left">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">%Y</td>
+<td align="left">四位的年份</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">%y</td>
+<td align="left">2位的年份</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">%m</td>
+<td align="left">月份（01,02,..11,12)</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">%c</td>
+<td align="left">月份（1,2,..11,12)</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">%d</td>
+<td align="left">日（01,02…）</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">%H</td>
+<td align="left">小时（24小时制）</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">%h</td>
+<td align="left">小时（12小时制）</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">%i</td>
+<td align="left">分钟(00,01,…59)</td>
+</tr>
+<tr>
+<td align="left">9</td>
+<td align="left">%s</td>
+<td align="left">秒(00,01,..59)</td>
+</tr>
+</tbody></table>
+</li>
+<li>now函数<blockquote>
+<p>now()返回当前系统日期+时间</p>
+</blockquote>
+</li>
+<li>curdate函数<blockquote>
+<p>curdate()返回当前系统日期，不包含时间</p>
+</blockquote>
+</li>
+<li>curtime函数<blockquote>
+<p>curtime()返回当前时间，不包含日期</p>
+</blockquote>
+</li>
+<li>year，month，day，hour，minute，second<blockquote>
+<p>可以获取指定的部分，年月日。。。</p>
+</blockquote>
+</li>
+<li>str_to_date函数<blockquote>
+<p>解析日期字符串，返回标准格式的日期</br>STR_TO_DATE(‘9-13-1999’,’%m-%d-%Y’) 1999-09-13</p>
+</blockquote>
+</li>
+<li>format_date函数<blockquote>
+<p>将日期转化为指定格式的字符串</br>DATE_FORMAT(NOW(),%y年%m月%d日)</p>
+</blockquote>
+</li>
+<li>datediff函数<blockquote>
+<p>datediff(expr1,expr2)比较两日期之间相差的天数，参数是两个标准格式的日期。</p>
+</blockquote>
+<h2 id="其他函数"><a href="#其他函数" class="headerlink" title="其他函数"></a>其他函数</h2></li>
+<li>VERSION()返回当前数据库版本</li>
+<li>DATABASE()返回当前数据库</li>
+<li>USER()返回当前用户<h2 id="流程控制函数"><a href="#流程控制函数" class="headerlink" title="流程控制函数"></a>流程控制函数</h2></li>
+<li>if函数<blockquote>
+<p>SELECT IF(expr,expr2,expr3)如果expr1为真则返回expr2，否则返回expr3</p>
+</blockquote>
+</li>
+<li>case函数<blockquote>
+<p>效果一：switch case</br>CASE 要判断的字段或表达式</br>WHEN 常量1 THEN 要显示的值1或语句1</br>WHEN 常量2 THEN 要显示的值2或语句2</br>…</br>ELSE 要显示的值n或者语句n</br>END<br>效果二：类似于多重if</br>CASE</br>WHEN 条件1 THEN 要显示的值1或语句1</br>WHEN 条件2 THEN 要显示的值2或语句2</br>…</br>ELSE 要显示的值n或语句n</br>END</p>
+</blockquote>
+<h1 id="分组函数"><a href="#分组函数" class="headerlink" title="分组函数"></a>分组函数</h1></li>
+<li>sum函数<blockquote>
+<p>求和，统计，忽略null值</p>
+</blockquote>
+</li>
+<li>avg函数<blockquote>
+<p>求平均值，忽略null值</p>
+</blockquote>
+</li>
+<li>max函数<blockquote>
+<p>求最大值，忽略null值</p>
+</blockquote>
+</li>
+<li>min函数<blockquote>
+<p>求最小值，忽略null值</p>
+</blockquote>
+</li>
+<li>count函数<blockquote>
+<p>求个数 ，忽略null值</p>
+</blockquote>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/07/10/Mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/" data-id="ckdep5w7j0001gov6f92mdqrs" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-MySql特别知识点" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/26/MySql%E7%89%B9%E5%88%AB%E7%9F%A5%E8%AF%86%E7%82%B9/" class="article-date">
+  <time datetime="2020-06-26T00:02:27.000Z" itemprop="datePublished">2020-06-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/26/MySql%E7%89%B9%E5%88%AB%E7%9F%A5%E8%AF%86%E7%82%B9/">MySql特别知识点</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><details>
+    <details>
+        <summary>别名</summary>
+        使用AS</br>
+        <code>
+        SElECT 100/2 AS 结果;
+        </code>
+    </details>
+    <details>
+        <summary>去重</summary>
+        使用DISTICT</br>
+        <code>
+        SELECT    DISTINCT department_id FROM employees;
+        </code>
+    </details>
+    <details>
+        <summary>"+"与"concat()"的差别</summary>
+        "+":只能用于数值型数据的加法运算或者数值字符串与数值型数据的加法运算.</br>
+        "concat": 拼接字符串作为一个字符串。null与任何字符拼接都是null</br>
+        <code>
+            //"+"</br>
+            SELECT 100+2 AS 结果;</br>
+            **结果**</br>
+            102</br>
+            </br></br>
+            //"contat()"</br>
+            SELECT CONCAT(last_name,first_name) AS别名 FROM employees;</br>
+            **别名**</br>
+            JackyChen</br>
+            梓良黄</br>
+        </code>
+    </details>
+    <details>
+        <summary>模糊查询通配符</summary>    
+        *!!!不能通配NULL，NULL与‘’是不同的</br>
+        <code>
+        "%":匹配任意多个字符</br>
+        "_":匹配任意一个字符,匹配“_”时要转义</br>
+        "ESCAPE":标注后面的第一个通配符转义其余不转义， ex:</br>
+        转义前：select * from user where username like '_nihao',</br>
+        转义后：select * from user where username like '/_nihao' escape '/',意思就是说/之后的_不作为通配符</br>
+        </code>
+    </details>
+    <details>
+        <summary>NULL</summary>
+        <code>
+        判断是不是NULL不能用"="，要用IS NULL或者安全等于"<=>"</br>
+        SELCET * FROM table_name WHERE cloumn_name IS[<=>] NULL</br>
+        </code>
+    </details>
+    <details>
+        <summary></summary>
+        <code>
+        </code>
+    </details>
+    <details>
+        <summary></summary>
+        <code>
+        </code>
+    </details>
+</details>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/06/26/MySql%E7%89%B9%E5%88%AB%E7%9F%A5%E8%AF%86%E7%82%B9/" data-id="ckdep5w7f0000gov6dfag8jwz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-git基本使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/22/git%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time datetime="2020-06-21T23:59:24.000Z" itemprop="datePublished">2020-06-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/git%E5%91%BD%E4%BB%A4/">git命令</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/22/git%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">git基本使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、新建代码库"><a href="#一、新建代码库" class="headerlink" title="一、新建代码库"></a>一、新建代码库</h2><p># 在当前目录新建一个Git代码库</br><br>$ git init</br><br># 新建一个目录，将其初始化为Git代码库</br><br>$ git init [project-name]</br><br># 下载一个项目和它的整个代码历史</br><br>$ git clone [url]</br></p>
+<h2 id="二、配置"><a href="#二、配置" class="headerlink" title="二、配置"></a>二、配置</h2><p>Git的设置文件为.gitconfig，它可以在用户主目录下（全局配置），也可以在项目目录下（项目配置）。</br><br># 显示当前的Git配置</br><br>$ git config –list</br><br># 编辑Git配置文件</br><br>$ git config -e [–global]</br><br># 设置提交代码时的用户信息</br><br>$ git config [–global] user.name “[name]”</br><br>$ git config [–global] user.email “[email address]”</br></p>
+<h2 id="三、增加-删除文件"><a href="#三、增加-删除文件" class="headerlink" title="三、增加/删除文件"></a>三、增加/删除文件</br></h2><p># 添加指定文件到暂存区</br><br>$ git add [file1] [file2] …</br><br># 添加指定目录到暂存区，包括子目录</br><br>$ git add [dir]</br><br># 添加当前目录的所有文件到暂存区</br><br>$ git add .</br><br># 添加每个变化前，都会要求确认</br><br># 对于同一个文件的多处变化，可以实现分次提交</br><br>$ git add -p</br><br># 删除工作区文件，并且将这次删除放入暂存区</br><br>$ git rm [file1] [file2] …</br><br># 停止追踪指定文件，但该文件会保留在工作区</br><br>$ git rm –cached [file]</br><br># 改名文件，并且将这个改名放入暂存区</br><br>$ git mv [file-original] [file-renamed]</br></p>
+<h2 id="四、代码提交"><a href="#四、代码提交" class="headerlink" title="四、代码提交"></a>四、代码提交</br></h2><p># 提交暂存区到仓库区</br><br>$ git commit -m [message]</br><br># 提交暂存区的指定文件到仓库区</br><br>$ git commit [file1] [file2] … -m [message]</br><br># 提交工作区自上次commit之后的变化，直接到仓库区</br><br>$ git commit -a</br><br># 提交时显示所有diff信息</br><br>$ git commit -v</br><br># 使用一次新的commit，替代上一次提交</br><br># 如果代码没有任何新变化，则用来改写上一次commit的提交信息</br><br>$ git commit –amend -m [message]</br><br># 重做上一次commit，并包括指定文件的新变化</br><br>$ git commit –amend [file1] [file2] …</br></p>
+<h2 id="五、分支"><a href="#五、分支" class="headerlink" title="五、分支"></a>五、分支</br></h2><p># 列出所有本地分支</br><br>$ git branch</br><br># 列出所有远程分支</br><br>$ git branch -r</br><br># 列出所有本地分支和远程分支</br><br>$ git branch -a</br><br># 新建一个分支，但依然停留在当前分支</br><br>$ git branch [branch-name]</br><br># 新建一个分支，并切换到该分支</br><br>$ git checkout -b [branch]</br><br># 新建一个分支，指向指定commit</br><br>$ git branch [branch] [commit]</br><br># 新建一个分支，与指定的远程分支建立追踪关系</br><br>$ git branch –track [branch] [remote-branch]</br><br># 切换到指定分支，并更新工作区</br><br>$ git checkout [branch-name]</br><br># 切换到上一个分支</br><br>$ git checkout -</br><br># 建立追踪关系，在现有分支与指定的远程分支之间</br><br>$ git branch –set-upstream [branch] [remote-branch]</br><br># 合并指定分支到当前分支</br><br>$ git merge [branch]</br><br># 选择一个commit，合并进当前分支</br><br>$ git cherry-pick [commit]</br><br># 删除分支</br><br>$ git branch -d [branch-name]</br><br># 删除远程分支</br><br>$ git push origin –delete [branch-name]</br><br>$ git branch -dr [remote/branch]</br></p>
+<h2 id="六、标签"><a href="#六、标签" class="headerlink" title="六、标签"></a>六、标签</br></h2><p># 列出所有tag</br><br>$ git tag</br><br># 新建一个tag在当前commit</br><br>$ git tag [tag]</br><br># 新建一个tag在指定commit</br><br>$ git tag [tag] [commit]</br><br># 删除本地tag</br><br>$ git tag -d [tag]</br><br># 删除远程tag</br><br>$ git push origin :refs/tags/[tagName]</br><br># 查看tag信息</br><br>$ git show [tag]</br><br># 提交指定tag</br><br>$ git push [remote] [tag]</br><br># 提交所有tag</br><br>$ git push [remote] –tags</br><br># 新建一个分支，指向某个tag</br><br>$ git checkout -b [branch] [tag]</br></p>
+<h2 id="七、查看信息"><a href="#七、查看信息" class="headerlink" title="七、查看信息"></a>七、查看信息</br></h2><p># 显示有变更的文件</br><br>$ git status</br><br># 显示当前分支的版本历史</br><br>$ git log</br><br># 显示commit历史，以及每次commit发生变更的文件</br><br>$ git log –stat</br><br># 搜索提交历史，根据关键词</br><br>$ git log -S [keyword]</br><br># 显示某个commit之后的所有变动，每个commit占据一行</br><br>$ git log [tag] HEAD –pretty=format:%s</br><br># 显示某个commit之后的所有变动，其”提交说明”必须符合搜索条件</br><br>$ git log [tag] HEAD –grep feature</br><br># 显示某个文件的版本历史，包括文件改名</br><br>$ git log –follow [file]</br><br>$ git whatchanged [file]</br><br># 显示指定文件相关的每一次diff</br><br>$ git log -p [file]</br><br># 显示过去5次提交</br><br>$ git log -5 –pretty –oneline</br><br># 显示所有提交过的用户，按提交次数排序</br><br>$ git shortlog -sn</br><br># 显示指定文件是什么人在什么时间修改过</br><br>$ git blame [file]</br><br># 显示暂存区和工作区的差异</br><br>$ git diff</br><br># 显示暂存区和上一个commit的差异</br><br>$ git diff –cached [file]</br><br># 显示工作区与当前分支最新commit之间的差异</br><br>$ git diff HEAD</br><br># 显示两次提交之间的差异</br><br>$ git diff [first-branch]…[second-branch]</br><br># 显示今天你写了多少行代码</br><br>$ git diff –shortstat “@{0 day ago}”</br><br># 显示某次提交的元数据和内容变化</br><br>$ git show [commit]</br><br># 显示某次提交发生变化的文件</br><br>$ git show –name-only [commit]</br><br># 显示某次提交时，某个文件的内容</br><br>$ git show [commit]:[filename]</br><br># 显示当前分支的最近几次提交</br><br>$ git reflog</br></p>
+<h2 id="八、远程同步"><a href="#八、远程同步" class="headerlink" title="八、远程同步"></a>八、远程同步</br></h2><p># 下载远程仓库的所有变动</br><br>$ git fetch [remote]</br><br># 显示所有远程仓库</br><br>$ git remote -v</br><br># 显示某个远程仓库的信息</br><br>$ git remote show [remote]</br><br># 增加一个新的远程仓库，并命名</br><br>$ git remote add [shortname] [url]</br><br># 取回远程仓库的变化，并与本地分支合并</br><br>$ git pull [remote] [branch]</br><br># 上传本地指定分支到远程仓库</br><br>$ git push [remote] [branch]</br><br># 强行推送当前分支到远程仓库，即使有冲突</br><br>$ git push [remote] –force</br><br># 推送所有分支到远程仓库</br><br>$ git push [remote] –all</br></p>
+<h2 id="九、撤销"><a href="#九、撤销" class="headerlink" title="九、撤销"></a>九、撤销</br></h2><p># 恢复暂存区的指定文件到工作区</br><br>$ git checkout [file]</br><br># 恢复某个commit的指定文件到暂存区和工作区</br><br>$ git checkout [commit] [file]</br><br># 恢复暂存区的所有文件到工作区</br><br>$ git checkout .</br><br># 重置暂存区的指定文件，与上一次commit保持一致，但工作区不变</br><br>$ git reset [file]</br><br># 重置暂存区与工作区，与上一次commit保持一致</br><br>$ git reset –hard</br><br># 重置当前分支的指针为指定commit，同时重置暂存区，但工作区不变</br><br>$ git reset [commit]</br><br># 重置当前分支的HEAD为指定commit，同时重置暂存区和工作区，与指定commit一致</br><br>$ git reset –hard [commit]</br><br># 重置当前HEAD为指定commit，但保持暂存区和工作区不变</br><br>$ git reset –keep [commit]</br><br># 新建一个commit，用来撤销指定commit</br><br># 后者的所有变化都将被前者抵消，并且应用到当前分支</br><br>$ git revert [commit]</br><br># 暂时将未提交的变化移除，稍后再移入</br><br>$ git stash</br><br>$ git stash pop</br></p>
+<h2 id="十、其他"><a href="#十、其他" class="headerlink" title="十、其他"></a>十、其他</br></h2><p># 生成一个可供发布的压缩包</br><br>$ git archive</br></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/06/22/git%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" data-id="ckdep5w7u000igov6fqdn0k0x" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/" rel="tag">git</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git%E5%91%BD%E4%BB%A4/">git命令</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/MySQL/" style="font-size: 20px;">MySQL</a> <a href="/tags/git/" style="font-size: 10px;">git</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/16/Mysql%E5%AD%90%E6%9F%A5%E8%AF%A2/">Mysql子查询</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/11/Mysql%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/">Mysql连接查询</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/11/Mysql%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2/">Mysql分组查询</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/10/Mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">Mysql常用函数</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/26/MySql%E7%89%B9%E5%88%AB%E7%9F%A5%E8%AF%86%E7%82%B9/">MySql特别知识点</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 sarsae<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

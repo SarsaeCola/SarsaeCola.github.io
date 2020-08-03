@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Mysql常用函数 | SarsaeCola</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="单行函数字符函数 length函数 用于获取值的字节长度，具体要看使用的字符集SELECT(‘John’)&#x2F;SELECT(‘张三丰haha’)   concat函数 用于拼接字符串SELECT CONCAT(last_name,’_’,first_name) 姓名 from employee   upper&#x2F;lower函数 将英文字符转变成大写或者小写UPPER(last_name)   subs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql常用函数">
+<meta property="og:url" content="http://yoursite.com/2020/07/10/Mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="SarsaeCola">
+<meta property="og:description" content="单行函数字符函数 length函数 用于获取值的字节长度，具体要看使用的字符集SELECT(‘John’)&#x2F;SELECT(‘张三丰haha’)   concat函数 用于拼接字符串SELECT CONCAT(last_name,’_’,first_name) 姓名 from employee   upper&#x2F;lower函数 将英文字符转变成大写或者小写UPPER(last_name)   subs">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-07-10T01:31:54.000Z">
+<meta property="article:modified_time" content="2020-08-03T15:58:38.790Z">
+<meta property="article:author" content="sarsae">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="SarsaeCola" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SarsaeCola</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Mysql常用函数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/10/Mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/" class="article-date">
+  <time datetime="2020-07-10T01:31:54.000Z" itemprop="datePublished">2020-07-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Mysql常用函数
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="单行函数"><a href="#单行函数" class="headerlink" title="单行函数"></a>单行函数</h1><h2 id="字符函数"><a href="#字符函数" class="headerlink" title="字符函数"></a>字符函数</h2><ul>
+<li>length函数<blockquote>
+<p>用于获取值的字节长度，具体要看使用的字符集</br>SELECT(‘John’)/SELECT(‘张三丰haha’)</p>
+</blockquote>
+</li>
+<li>concat函数<blockquote>
+<p>用于拼接字符串</br>SELECT CONCAT(last_name,’_’,first_name) 姓名 from employee</p>
+</blockquote>
+</li>
+<li>upper/lower函数<blockquote>
+<p>将英文字符转变成大写或者小写</br>UPPER(last_name)</p>
+</blockquote>
+</li>
+<li>substr,substring函数(有多种重载类型)<blockquote>
+<p><strong>索引从1开始</strong></br>SUBSTR(str,pos),从pos出截取到字符串尾部</br>SUBSTR(str,pos,len)，从pos处截取指定长度的字串</br></p>
+</blockquote>
+</li>
+<li>instr函数<blockquote>
+<p>instr(str,substr)返回substr在str中的起始索引,找不到则返回0</p>
+</blockquote>
+</li>
+<li>trim函数<blockquote>
+<p>TRIM(str)去掉字符串的前后空格</br>TRIM(char FROM str)去掉str前后的指定的字符char，如SELECT TRIM(‘a’ FROM ‘aaaaaxxxaaayyyaaaa’) 结果是’xxxaaayyy’如果char是’aa’则结果是’axxxaaayyy’</br></p>
+</blockquote>
+</li>
+<li>lpad函数<blockquote>
+<p>lpad(str,len,char)用指定字符左填充字符串到指定长度，并返回指定长度的字串，指定长度小于原字串则会实现截取效果。</p>
+</blockquote>
+</li>
+<li>replace函数<blockquote>
+<p>replace(str,substr1,substr2)用substr2替换str中<strong>全部的</strong>substr1</p>
+</blockquote>
+<h2 id="数学函数"><a href="#数学函数" class="headerlink" title="数学函数"></a>数学函数</h2></li>
+<li>round函数<blockquote>
+<p>round(X)四舍五入到个位</br>round(X,D)四舍五入到小数点后第D位</p>
+</blockquote>
+</li>
+<li>ceil函数/floor函数<blockquote>
+<p>ceil（X）向上取整/floor(X)向下取整</p>
+</blockquote>
+</li>
+<li>truncate函数<blockquote>
+<p>truancate(X,D)截断小数点后指定位数</br>truncate（1.6999，1）返回1.6</p>
+</blockquote>
+</li>
+<li>mod函数<blockquote>
+<p>MOD（X，D）取余</p>
+</blockquote>
+</li>
+<li>rand函数<blockquote>
+<p>返回0~1之间的随机小数.</p>
+</blockquote>
+<h2 id="日期函数"><a href="#日期函数" class="headerlink" title="日期函数"></a>日期函数</h2><table>
+<thead>
+<tr>
+<th align="left">序号</th>
+<th align="left">格式符</th>
+<th align="left">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">%Y</td>
+<td align="left">四位的年份</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">%y</td>
+<td align="left">2位的年份</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">%m</td>
+<td align="left">月份（01,02,..11,12)</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">%c</td>
+<td align="left">月份（1,2,..11,12)</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">%d</td>
+<td align="left">日（01,02…）</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">%H</td>
+<td align="left">小时（24小时制）</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">%h</td>
+<td align="left">小时（12小时制）</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">%i</td>
+<td align="left">分钟(00,01,…59)</td>
+</tr>
+<tr>
+<td align="left">9</td>
+<td align="left">%s</td>
+<td align="left">秒(00,01,..59)</td>
+</tr>
+</tbody></table>
+</li>
+<li>now函数<blockquote>
+<p>now()返回当前系统日期+时间</p>
+</blockquote>
+</li>
+<li>curdate函数<blockquote>
+<p>curdate()返回当前系统日期，不包含时间</p>
+</blockquote>
+</li>
+<li>curtime函数<blockquote>
+<p>curtime()返回当前时间，不包含日期</p>
+</blockquote>
+</li>
+<li>year，month，day，hour，minute，second<blockquote>
+<p>可以获取指定的部分，年月日。。。</p>
+</blockquote>
+</li>
+<li>str_to_date函数<blockquote>
+<p>解析日期字符串，返回标准格式的日期</br>STR_TO_DATE(‘9-13-1999’,’%m-%d-%Y’) 1999-09-13</p>
+</blockquote>
+</li>
+<li>format_date函数<blockquote>
+<p>将日期转化为指定格式的字符串</br>DATE_FORMAT(NOW(),%y年%m月%d日)</p>
+</blockquote>
+</li>
+<li>datediff函数<blockquote>
+<p>datediff(expr1,expr2)比较两日期之间相差的天数，参数是两个标准格式的日期。</p>
+</blockquote>
+<h2 id="其他函数"><a href="#其他函数" class="headerlink" title="其他函数"></a>其他函数</h2></li>
+<li>VERSION()返回当前数据库版本</li>
+<li>DATABASE()返回当前数据库</li>
+<li>USER()返回当前用户<h2 id="流程控制函数"><a href="#流程控制函数" class="headerlink" title="流程控制函数"></a>流程控制函数</h2></li>
+<li>if函数<blockquote>
+<p>SELECT IF(expr,expr2,expr3)如果expr1为真则返回expr2，否则返回expr3</p>
+</blockquote>
+</li>
+<li>case函数<blockquote>
+<p>效果一：switch case</br>CASE 要判断的字段或表达式</br>WHEN 常量1 THEN 要显示的值1或语句1</br>WHEN 常量2 THEN 要显示的值2或语句2</br>…</br>ELSE 要显示的值n或者语句n</br>END<br>效果二：类似于多重if</br>CASE</br>WHEN 条件1 THEN 要显示的值1或语句1</br>WHEN 条件2 THEN 要显示的值2或语句2</br>…</br>ELSE 要显示的值n或语句n</br>END</p>
+</blockquote>
+<h1 id="分组函数"><a href="#分组函数" class="headerlink" title="分组函数"></a>分组函数</h1></li>
+<li>sum函数<blockquote>
+<p>求和，统计，忽略null值</p>
+</blockquote>
+</li>
+<li>avg函数<blockquote>
+<p>求平均值，忽略null值</p>
+</blockquote>
+</li>
+<li>max函数<blockquote>
+<p>求最大值，忽略null值</p>
+</blockquote>
+</li>
+<li>min函数<blockquote>
+<p>求最小值，忽略null值</p>
+</blockquote>
+</li>
+<li>count函数<blockquote>
+<p>求个数 ，忽略null值</p>
+</blockquote>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/07/10/Mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/" data-id="ckdep5w7j0001gov6f92mdqrs" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/07/11/Mysql%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Mysql分组查询
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/06/26/MySql%E7%89%B9%E5%88%AB%E7%9F%A5%E8%AF%86%E7%82%B9/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">MySql特别知识点</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git%E5%91%BD%E4%BB%A4/">git命令</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/MySQL/" style="font-size: 20px;">MySQL</a> <a href="/tags/git/" style="font-size: 10px;">git</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/16/Mysql%E5%AD%90%E6%9F%A5%E8%AF%A2/">Mysql子查询</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/11/Mysql%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/">Mysql连接查询</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/11/Mysql%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2/">Mysql分组查询</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/10/Mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">Mysql常用函数</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/26/MySql%E7%89%B9%E5%88%AB%E7%9F%A5%E8%AF%86%E7%82%B9/">MySql特别知识点</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 sarsae<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

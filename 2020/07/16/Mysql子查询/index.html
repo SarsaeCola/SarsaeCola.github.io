@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Mysql子查询 | SarsaeCola</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="含义：出现在其它语句中的select语句，称为子查询或内查询，；外部的查询语句，称为主查询或外查询。 特点 子查询放在小括号内 子查询一般放在条件的右侧 标量子查询一般搭配着单行操作符使用：&gt; &lt; &gt;&#x3D; &lt;&#x3D; &#x3D; &lt;&gt; 列子查询一般搭配多行操作符使用：in，any&#x2F;some，all 子查询的执行优先于主查询执行分类按子查询出现的位置： SELECT后面（仅仅支持">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql子查询">
+<meta property="og:url" content="http://yoursite.com/2020/07/16/Mysql%E5%AD%90%E6%9F%A5%E8%AF%A2/index.html">
+<meta property="og:site_name" content="SarsaeCola">
+<meta property="og:description" content="含义：出现在其它语句中的select语句，称为子查询或内查询，；外部的查询语句，称为主查询或外查询。 特点 子查询放在小括号内 子查询一般放在条件的右侧 标量子查询一般搭配着单行操作符使用：&gt; &lt; &gt;&#x3D; &lt;&#x3D; &#x3D; &lt;&gt; 列子查询一般搭配多行操作符使用：in，any&#x2F;some，all 子查询的执行优先于主查询执行分类按子查询出现的位置： SELECT后面（仅仅支持">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-07-16T02:07:24.000Z">
+<meta property="article:modified_time" content="2020-08-03T15:59:33.918Z">
+<meta property="article:author" content="sarsae">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="SarsaeCola" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SarsaeCola</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Mysql子查询" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/16/Mysql%E5%AD%90%E6%9F%A5%E8%AF%A2/" class="article-date">
+  <time datetime="2020-07-16T02:07:24.000Z" itemprop="datePublished">2020-07-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Mysql子查询
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>含义：出现在其它语句中的select语句，称为子查询或内查询，；外部的查询语句，称为主查询或外查询。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>子查询放在小括号内</li>
+<li>子查询一般放在条件的右侧</li>
+<li>标量子查询一般搭配着单行操作符使用：&gt; &lt; &gt;= &lt;= = &lt;&gt;</li>
+<li>列子查询一般搭配多行操作符使用：in，any/some，all</li>
+<li>子查询的执行优先于主查询执行<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h3 id="按子查询出现的位置："><a href="#按子查询出现的位置：" class="headerlink" title="按子查询出现的位置："></a>按子查询出现的位置：</h3></li>
+<li>SELECT后面（仅仅支持标量子查询）</li>
+<li>FROM后面（支持表子查询）</li>
+<li>WHERE或HAVING后面（支持标量子查询，列子查询，行子查询）</li>
+<li>EXISTS后面（相关子查询）（支持表子查询）<h3 id="按结果集的行列数不同："><a href="#按结果集的行列数不同：" class="headerlink" title="按结果集的行列数不同："></a>按结果集的行列数不同：</h3></li>
+<li>标量子查询（结果集只有一行一列）</li>
+<li>列子查询（结果集有一列多行）</li>
+<li>行子查询（结果集有一行多列或多行多列）</li>
+<li>表子查询（结果集有多行多列）</li>
+</ul>
+<h2 id="where和having后面"><a href="#where和having后面" class="headerlink" title="where和having后面"></a>where和having后面</h2><ul>
+<li>标量子查询<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查询谁的工资比Abel高</span></span><br><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> salary&gt;(</span><br><span class="line">    <span class="keyword">SELECT</span> salary</span><br><span class="line">    <span class="keyword">FROM</span> employees</span><br><span class="line">    <span class="keyword">WHERE</span> last_name=<span class="string">&#x27;Abel&#x27;</span>);</span><br></pre></td></tr></table></figure></li>
+<li>列子查询</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IN/NOT IN</td>
+<td>等于列表中的任意一个</td>
+</tr>
+<tr>
+<td>ANY/SOME</td>
+<td>和子查询返回的某一个值比较</td>
+</tr>
+<tr>
+<td>ALL</td>
+<td>和子查询返回的所有值比较</td>
+</tr>
+</tbody></table>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#返回location_id是1400或1700的部门中的所有员工的姓名</span></span><br><span class="line"><span class="keyword">SELECT</span> last_name</span><br><span class="line"><span class="keyword">FROM</span> department_id <span class="keyword">IN</span>(</span><br><span class="line">    <span class="keyword">SELECT</span> department_id</span><br><span class="line">    <span class="keyword">FROM</span> departments</span><br><span class="line">    <span class="keyword">WHERE</span> location_id <span class="keyword">IN</span> (<span class="number">1400</span>,<span class="number">1700</span>)</span><br><span class="line">);</span><br><span class="line"><span class="comment">#返回其它部门中比job_id以为‘IT_PROG’部门任一工资低的员工的信息</span></span><br><span class="line"><span class="keyword">SELECT</span>　＊</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> salary&lt;<span class="keyword">ANY</span>(</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> salary</span><br><span class="line">    <span class="keyword">FROM</span> employees</span><br><span class="line">    <span class="keyword">WHERE</span> job_id=<span class="string">&#x27;IT_PROG&#x27;</span></span><br><span class="line">) <span class="keyword">AND</span> job_id&lt;&gt;<span class="string">&#x27;IT_PROG&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>行子查询<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> employees</span><br><span class="line"><span class="keyword">WHERE</span> (employees_id,salary)=(</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">MIN</span>(emplyees_id),<span class="keyword">MAX</span>(salary)</span><br><span class="line">    <span class="keyword">FROM</span> employees</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="在select后面"><a href="#在select后面" class="headerlink" title="在select后面"></a>在select后面</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查询每个部门的员工的个数</span></span><br><span class="line"><span class="keyword">SELECT</span> d.*,(</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*)</span><br><span class="line">    <span class="keyword">FROM</span> employees e</span><br><span class="line">    <span class="keyword">WHERE</span> e.department_id=d.<span class="string">`department_id`</span></span><br><span class="line">) 个数</span><br><span class="line"><span class="keyword">FROM</span> departments d;</span><br></pre></td></tr></table></figure>
+
+<h2 id="from后面"><a href="#from后面" class="headerlink" title="from后面"></a>from后面</h2><p><strong>返回的是一张表，使用时要起别名</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查询每个部门的平均工资的工资等级</span></span><br><span class="line"><span class="keyword">SELECT</span> ag_dep.*,g.<span class="string">`grade_level`</span></span><br><span class="line"><span class="keyword">FROM</span>(</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">AVG</span>(salary) ag,department_id</span><br><span class="line">    <span class="keyword">FROM</span> employees</span><br><span class="line">    <span class="keyword">GROUP</span> <span class="keyword">BY</span> department_id</span><br><span class="line">) ag_dep</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> job_grades g</span><br><span class="line"><span class="keyword">ON</span> ag_dep.ag <span class="keyword">BETWEEN</span> lowest_sal <span class="keyword">AND</span> highest_sal;</span><br></pre></td></tr></table></figure>
+
+<h2 id="exists后面（相关子查询）"><a href="#exists后面（相关子查询）" class="headerlink" title="exists后面（相关子查询）"></a>exists后面（相关子查询）</h2><p>根据是否存在，返回0/1（存在1，不存在0）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查询有员工的部门名</span></span><br><span class="line"><span class="keyword">SELECT</span> deparment_name</span><br><span class="line"><span class="keyword">FROM</span> department d</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">EXISTS</span>(</span><br><span class="line">    <span class="keyword">SELECT</span> * </span><br><span class="line">    <span class="keyword">FROM</span> employees e</span><br><span class="line">    <span class="keyword">WHERE</span> d.<span class="string">&#x27;department_id`=e.`deparment_id`</span></span><br><span class="line"><span class="string">);</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/07/16/Mysql%E5%AD%90%E6%9F%A5%E8%AF%A2/" data-id="ckdep5w7s000fgov69t3r4y75" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/07/11/Mysql%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Mysql连接查询</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/SQL/">SQL</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git%E5%91%BD%E4%BB%A4/">git命令</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/MySQL/" style="font-size: 20px;">MySQL</a> <a href="/tags/git/" style="font-size: 10px;">git</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/16/Mysql%E5%AD%90%E6%9F%A5%E8%AF%A2/">Mysql子查询</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/11/Mysql%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/">Mysql连接查询</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/11/Mysql%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2/">Mysql分组查询</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/10/Mysql%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">Mysql常用函数</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/26/MySql%E7%89%B9%E5%88%AB%E7%9F%A5%E8%AF%86%E7%82%B9/">MySql特别知识点</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 sarsae<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
