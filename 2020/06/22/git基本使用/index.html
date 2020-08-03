@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>git基本使用 | SarsaeCola</title><meta name="description" content="一、新建代码库# 在当前目录新建一个Git代码库$ git init# 新建一个目录，将其初始化为Git代码库$ git init [project-name]# 下载一个项目和它的整个代码历史$ git clone [url] 二、配置Git的设置文件为.gitconfig，它可以在用户主目录下（全局配置），也可以在项目目录下（项目配置）。# 显示当前的Git配置$ git config –li"><meta name="keywords" content="git"><meta name="author" content="sarsae"><meta name="copyright" content="sarsae"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://yoursite.com/2020/06/22/git%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="git基本使用"><meta property="og:url" content="http://yoursite.com/2020/06/22/git%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/"><meta property="og:site_name" content="SarsaeCola"><meta property="og:description" content="一、新建代码库# 在当前目录新建一个Git代码库$ git init# 新建一个目录，将其初始化为Git代码库$ git init [project-name]# 下载一个项目和它的整个代码历史$ git clone [url] 二、配置Git的设置文件为.gitconfig，它可以在用户主目录下（全局配置），也可以在项目目录下（项目配置）。# 显示当前的Git配置$ git config –li"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2020-06-21T23:59:24.000Z"><meta property="article:modified_time" content="2020-06-23T14:10:51.868Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isSidebar: true,
+  postUpdate: '2020-06-23 22:10:51'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.1"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">6</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">2</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">2</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、新建代码库"><span class="toc-number">1.</span> <span class="toc-text">一、新建代码库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、配置"><span class="toc-number">2.</span> <span class="toc-text">二、配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、增加-删除文件"><span class="toc-number">3.</span> <span class="toc-text">三、增加&#x2F;删除文件
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、代码提交"><span class="toc-number">4.</span> <span class="toc-text">四、代码提交
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、分支"><span class="toc-number">5.</span> <span class="toc-text">五、分支
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、标签"><span class="toc-number">6.</span> <span class="toc-text">六、标签
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#七、查看信息"><span class="toc-number">7.</span> <span class="toc-text">七、查看信息
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#八、远程同步"><span class="toc-number">8.</span> <span class="toc-text">八、远程同步
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#九、撤销"><span class="toc-number">9.</span> <span class="toc-text">九、撤销
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十、其他"><span class="toc-number">10.</span> <span class="toc-text">十、其他
+</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">SarsaeCola</a></span><span class="pull-right menus"><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">git基本使用</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-06-21T23:59:24.000Z" title="发表于 2020-06-22 07:59:24">2020-06-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-06-23T14:10:51.868Z" title="更新于 2020-06-23 22:10:51">2020-06-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/git%E5%91%BD%E4%BB%A4/">git命令</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="一、新建代码库"><a href="#一、新建代码库" class="headerlink" title="一、新建代码库"></a>一、新建代码库</h2><p># 在当前目录新建一个Git代码库</br><br>$ git init</br><br># 新建一个目录，将其初始化为Git代码库</br><br>$ git init [project-name]</br><br># 下载一个项目和它的整个代码历史</br><br>$ git clone [url]</br></p>
+<h2 id="二、配置"><a href="#二、配置" class="headerlink" title="二、配置"></a>二、配置</h2><p>Git的设置文件为.gitconfig，它可以在用户主目录下（全局配置），也可以在项目目录下（项目配置）。</br><br># 显示当前的Git配置</br><br>$ git config –list</br><br># 编辑Git配置文件</br><br>$ git config -e [–global]</br><br># 设置提交代码时的用户信息</br><br>$ git config [–global] user.name “[name]”</br><br>$ git config [–global] user.email “[email address]”</br></p>
+<h2 id="三、增加-删除文件"><a href="#三、增加-删除文件" class="headerlink" title="三、增加/删除文件"></a>三、增加/删除文件</br></h2><p># 添加指定文件到暂存区</br><br>$ git add [file1] [file2] …</br><br># 添加指定目录到暂存区，包括子目录</br><br>$ git add [dir]</br><br># 添加当前目录的所有文件到暂存区</br><br>$ git add .</br><br># 添加每个变化前，都会要求确认</br><br># 对于同一个文件的多处变化，可以实现分次提交</br><br>$ git add -p</br><br># 删除工作区文件，并且将这次删除放入暂存区</br><br>$ git rm [file1] [file2] …</br><br># 停止追踪指定文件，但该文件会保留在工作区</br><br>$ git rm –cached [file]</br><br># 改名文件，并且将这个改名放入暂存区</br><br>$ git mv [file-original] [file-renamed]</br></p>
+<h2 id="四、代码提交"><a href="#四、代码提交" class="headerlink" title="四、代码提交"></a>四、代码提交</br></h2><p># 提交暂存区到仓库区</br><br>$ git commit -m [message]</br><br># 提交暂存区的指定文件到仓库区</br><br>$ git commit [file1] [file2] … -m [message]</br><br># 提交工作区自上次commit之后的变化，直接到仓库区</br><br>$ git commit -a</br><br># 提交时显示所有diff信息</br><br>$ git commit -v</br><br># 使用一次新的commit，替代上一次提交</br><br># 如果代码没有任何新变化，则用来改写上一次commit的提交信息</br><br>$ git commit –amend -m [message]</br><br># 重做上一次commit，并包括指定文件的新变化</br><br>$ git commit –amend [file1] [file2] …</br></p>
+<h2 id="五、分支"><a href="#五、分支" class="headerlink" title="五、分支"></a>五、分支</br></h2><p># 列出所有本地分支</br><br>$ git branch</br><br># 列出所有远程分支</br><br>$ git branch -r</br><br># 列出所有本地分支和远程分支</br><br>$ git branch -a</br><br># 新建一个分支，但依然停留在当前分支</br><br>$ git branch [branch-name]</br><br># 新建一个分支，并切换到该分支</br><br>$ git checkout -b [branch]</br><br># 新建一个分支，指向指定commit</br><br>$ git branch [branch] [commit]</br><br># 新建一个分支，与指定的远程分支建立追踪关系</br><br>$ git branch –track [branch] [remote-branch]</br><br># 切换到指定分支，并更新工作区</br><br>$ git checkout [branch-name]</br><br># 切换到上一个分支</br><br>$ git checkout -</br><br># 建立追踪关系，在现有分支与指定的远程分支之间</br><br>$ git branch –set-upstream [branch] [remote-branch]</br><br># 合并指定分支到当前分支</br><br>$ git merge [branch]</br><br># 选择一个commit，合并进当前分支</br><br>$ git cherry-pick [commit]</br><br># 删除分支</br><br>$ git branch -d [branch-name]</br><br># 删除远程分支</br><br>$ git push origin –delete [branch-name]</br><br>$ git branch -dr [remote/branch]</br></p>
+<h2 id="六、标签"><a href="#六、标签" class="headerlink" title="六、标签"></a>六、标签</br></h2><p># 列出所有tag</br><br>$ git tag</br><br># 新建一个tag在当前commit</br><br>$ git tag [tag]</br><br># 新建一个tag在指定commit</br><br>$ git tag [tag] [commit]</br><br># 删除本地tag</br><br>$ git tag -d [tag]</br><br># 删除远程tag</br><br>$ git push origin :refs/tags/[tagName]</br><br># 查看tag信息</br><br>$ git show [tag]</br><br># 提交指定tag</br><br>$ git push [remote] [tag]</br><br># 提交所有tag</br><br>$ git push [remote] –tags</br><br># 新建一个分支，指向某个tag</br><br>$ git checkout -b [branch] [tag]</br></p>
+<h2 id="七、查看信息"><a href="#七、查看信息" class="headerlink" title="七、查看信息"></a>七、查看信息</br></h2><p># 显示有变更的文件</br><br>$ git status</br><br># 显示当前分支的版本历史</br><br>$ git log</br><br># 显示commit历史，以及每次commit发生变更的文件</br><br>$ git log –stat</br><br># 搜索提交历史，根据关键词</br><br>$ git log -S [keyword]</br><br># 显示某个commit之后的所有变动，每个commit占据一行</br><br>$ git log [tag] HEAD –pretty=format:%s</br><br># 显示某个commit之后的所有变动，其”提交说明”必须符合搜索条件</br><br>$ git log [tag] HEAD –grep feature</br><br># 显示某个文件的版本历史，包括文件改名</br><br>$ git log –follow [file]</br><br>$ git whatchanged [file]</br><br># 显示指定文件相关的每一次diff</br><br>$ git log -p [file]</br><br># 显示过去5次提交</br><br>$ git log -5 –pretty –oneline</br><br># 显示所有提交过的用户，按提交次数排序</br><br>$ git shortlog -sn</br><br># 显示指定文件是什么人在什么时间修改过</br><br>$ git blame [file]</br><br># 显示暂存区和工作区的差异</br><br>$ git diff</br><br># 显示暂存区和上一个commit的差异</br><br>$ git diff –cached [file]</br><br># 显示工作区与当前分支最新commit之间的差异</br><br>$ git diff HEAD</br><br># 显示两次提交之间的差异</br><br>$ git diff [first-branch]…[second-branch]</br><br># 显示今天你写了多少行代码</br><br>$ git diff –shortstat “@{0 day ago}”</br><br># 显示某次提交的元数据和内容变化</br><br>$ git show [commit]</br><br># 显示某次提交发生变化的文件</br><br>$ git show –name-only [commit]</br><br># 显示某次提交时，某个文件的内容</br><br>$ git show [commit]:[filename]</br><br># 显示当前分支的最近几次提交</br><br>$ git reflog</br></p>
+<h2 id="八、远程同步"><a href="#八、远程同步" class="headerlink" title="八、远程同步"></a>八、远程同步</br></h2><p># 下载远程仓库的所有变动</br><br>$ git fetch [remote]</br><br># 显示所有远程仓库</br><br>$ git remote -v</br><br># 显示某个远程仓库的信息</br><br>$ git remote show [remote]</br><br># 增加一个新的远程仓库，并命名</br><br>$ git remote add [shortname] [url]</br><br># 取回远程仓库的变化，并与本地分支合并</br><br>$ git pull [remote] [branch]</br><br># 上传本地指定分支到远程仓库</br><br>$ git push [remote] [branch]</br><br># 强行推送当前分支到远程仓库，即使有冲突</br><br>$ git push [remote] –force</br><br># 推送所有分支到远程仓库</br><br>$ git push [remote] –all</br></p>
+<h2 id="九、撤销"><a href="#九、撤销" class="headerlink" title="九、撤销"></a>九、撤销</br></h2><p># 恢复暂存区的指定文件到工作区</br><br>$ git checkout [file]</br><br># 恢复某个commit的指定文件到暂存区和工作区</br><br>$ git checkout [commit] [file]</br><br># 恢复暂存区的所有文件到工作区</br><br>$ git checkout .</br><br># 重置暂存区的指定文件，与上一次commit保持一致，但工作区不变</br><br>$ git reset [file]</br><br># 重置暂存区与工作区，与上一次commit保持一致</br><br>$ git reset –hard</br><br># 重置当前分支的指针为指定commit，同时重置暂存区，但工作区不变</br><br>$ git reset [commit]</br><br># 重置当前分支的HEAD为指定commit，同时重置暂存区和工作区，与指定commit一致</br><br>$ git reset –hard [commit]</br><br># 重置当前HEAD为指定commit，但保持暂存区和工作区不变</br><br>$ git reset –keep [commit]</br><br># 新建一个commit，用来撤销指定commit</br><br># 后者的所有变化都将被前者抵消，并且应用到当前分支</br><br>$ git revert [commit]</br><br># 暂时将未提交的变化移除，稍后再移入</br><br>$ git stash</br><br>$ git stash pop</br></p>
+<h2 id="十、其他"><a href="#十、其他" class="headerlink" title="十、其他"></a>十、其他</br></h2><p># 生成一个可供发布的压缩包</br><br>$ git archive</br></p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">sarsae</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2020/06/22/git%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/">http://yoursite.com/2020/06/22/git%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">SarsaeCola</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/git/">git</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2020/06/26/MySql%E7%89%B9%E5%88%AB%E7%9F%A5%E8%AF%86%E7%82%B9/"><img class="prev-cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">MySql特别知识点</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 By sarsae</div><div class="framework-info"><span>框架 </span><a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
