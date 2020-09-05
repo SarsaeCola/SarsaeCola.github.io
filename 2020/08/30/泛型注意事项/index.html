@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>泛型注意事项 | SarsaeCola</title><meta name="description" content="转载自：dusin  不可具体化类型  一个具体化类型是其信息在运行时是完全可知的。这包括原始类型，非泛型类型，原类型，和非受限通配符范型调用。 不可具体化类型是其信息在编译时的类型擦除是被去掉了——没有定义成非受限的通配符范型调用。一个不可具体化类型在运行时其信息不完全可知。List和List是不可具体化类型；JVM在运行时无法知道它们间的区别。如在“泛型的限制”一节中，有些情况下是不能使用不可"><meta name="keywords" content="JVM,Java"><meta name="author" content="sarsae"><meta name="copyright" content="sarsae"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://yoursite.com/2020/08/30/%E6%B3%9B%E5%9E%8B%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="泛型注意事项"><meta property="og:url" content="http://yoursite.com/2020/08/30/%E6%B3%9B%E5%9E%8B%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/"><meta property="og:site_name" content="SarsaeCola"><meta property="og:description" content="转载自：dusin  不可具体化类型  一个具体化类型是其信息在运行时是完全可知的。这包括原始类型，非泛型类型，原类型，和非受限通配符范型调用。 不可具体化类型是其信息在编译时的类型擦除是被去掉了——没有定义成非受限的通配符范型调用。一个不可具体化类型在运行时其信息不完全可知。List和List是不可具体化类型；JVM在运行时无法知道它们间的区别。如在“泛型的限制”一节中，有些情况下是不能使用不可"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2020-08-30T06:30:36.000Z"><meta property="article:modified_time" content="2020-08-30T06:38:31.139Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isSidebar: false,
+  postUpdate: '2020-08-30 14:38:31'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.1"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">21</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">17</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">12</div></a></div></div></div><hr/></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">SarsaeCola</a></span><span class="pull-right menus"><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">泛型注意事项</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-08-30T06:30:36.000Z" title="发表于 2020-08-30 14:30:36">2020-08-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-30T06:38:31.139Z" title="更新于 2020-08-30 14:38:31">2020-08-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/">Java</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>转载自：<a href="https://blog.csdn.net/dusin/article/details/10054981?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.channel_param" target="_blank" rel="noopener">dusin</a></p>
+<blockquote>
+<p>不可具体化类型</p>
+</blockquote>
+<p>一个具体化类型是其信息在运行时是完全可知的。这包括原始类型，非泛型类型，原类型，和非受限通配符范型调用。</p>
+<p>不可具体化类型是其信息在编译时的类型擦除是被去掉了——没有定义成非受限的通配符范型调用。一个不可具体化类型在运行时其信息不完全可知。List<String>和List<Number>是不可具体化类型；JVM在运行时无法知道它们间的区别。如在“泛型的限制”一节中，有些情况下是不能使用不可具体化类型：在 instanceof 表达式中，在数组元素中。</p>
+<blockquote>
+<p>堆污染</p>
+</blockquote>
+<p>当参数化类型变量引用一个非参数化类型对象时，就会发生堆污染现象。这种情况发生在当程序执行一些会产生编译时的非受检警告（unchecked warning）时。</p>
+<p>为了更有效的使用Java的泛型，你必须考虑到下面的这些限制：</p>
+<ul>
+<li>不能使用原始类型来实例化泛型类型</li>
+<li>不能创建类型参数的实例</li>
+<li>不能声明类型为类型参数的静态字段</li>
+<li>不能在参数化类型上使用映射（cast）和instanceof</li>
+<li>不能创建参数化类型数组</li>
+<li>不能创建，捕获，抛出参数化类型对象</li>
+<li>不能重载形式类型参数擦除后得到相同的原类型的方法</li>
+</ul>
+<p>不能使用原始类型来实例化泛型类型</p>
+<p>考虑下面参数化类型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pair</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> K key;</span><br><span class="line">    <span class="keyword">private</span> V value;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Pair</span><span class="params">(K key, V value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.key = key;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当创建一个Pair对象时，你不能用原始类型替换类型参数K，V：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Pair&lt;<span class="keyword">int</span>, <span class="keyword">char</span>&gt; p = <span class="keyword">new</span> Pair&lt;&gt;(<span class="number">8</span>, <span class="string">'a'</span>);  <span class="comment">// compile-time error</span></span><br></pre></td></tr></table></figure>
+
+
+<p>你只可以用非原始类型替换类型参数K和V：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Pair&lt;Integer, Character&gt; p = <span class="keyword">new</span> Pair&lt;&gt;(<span class="number">8</span>, <span class="string">'a'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>注意，Java编译器会自动装箱，8会变成Integer.valueOf(8)，‘a’会变成Character(‘a’)：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Pair&lt;Integer, Character&gt; p = <span class="keyword">new</span> Pair&lt;&gt;(Integer.valueOf(<span class="number">8</span>), <span class="keyword">new</span> Character(<span class="string">'a'</span>));</span><br></pre></td></tr></table></figure>
+
+
+
+<p>不能创建类型参数的实例</p>
+<p>你不能创建类型参数的实例。例如，下面的代码会产生一个编译错误：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">append</span><span class="params">(List&lt;E&gt; list)</span> </span>&#123;</span><br><span class="line">    E elem = <span class="keyword">new</span> E();  <span class="comment">// compile-time error</span></span><br><span class="line">    list.add(elem);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>变通方法是，你可以通过反射机制类型参数对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">append</span><span class="params">(List&lt;E&gt; list, Class&lt;E&gt; cls)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    E elem = cls.newInstance();   <span class="comment">// OK</span></span><br><span class="line">    list.add(elem);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>你可以用以下方式来调用append方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; ls = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">append(ls, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>不能声明类型为类型参数的静态字段</p>
+<p>一个类的静态字段，可以被类的所有非静态对象共享的类的变量。因此，类型参数的静态字段是不允许的。考虑下面的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MobileDevice</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> T os;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果允许静态类型参数字段，下面的代码将产生混淆：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MobileDevice&lt;Smartphone&gt; phone = <span class="keyword">new</span> MobileDevice&lt;&gt;();</span><br><span class="line">MobileDevice&lt;Pager&gt; pager = <span class="keyword">new</span> MobileDevice&lt;&gt;();</span><br><span class="line">MobileDevice&lt;TabletPC&gt; pc = <span class="keyword">new</span> MobileDevice&lt;&gt;();</span><br></pre></td></tr></table></figure>
+
+<p>因为phone，pager，和pc共享静态字段os，那么os该是什么类型呢？它不能同时是Smartphone，Pager，和TabletPC。因此，你不能创建类型参数的静态字段。</p>
+<p>不能在参数化类型上使用映射（cast）和instanceof</p>
+<p>因为Java编译器会擦除所有泛型中的类型参数，在运行时，你不能区分正在使用的是泛型那个参数化类型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;E&gt; <span class="function"><span class="keyword">void</span> <span class="title">rtti</span><span class="params">(List&lt;E&gt; list)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (list <span class="keyword">instanceof</span> ArrayList&lt;Integer&gt;) &#123;  <span class="comment">// compile-time error</span></span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>传递给rtti方法的参数化类型的集合是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S = &#123; ArrayList&lt;Integer&gt;, ArrayList&lt;String&gt; LinkedList&lt;Character&gt;, ... &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>运行时不会跟踪类型参数，因此不能区分ArrayList<Integer>和ArrayList<String>间的不同。你最多能做的是使用上界通配符来验证list是一个ArrayList：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">rtti</span><span class="params">(List&lt;?&gt; list)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (list <span class="keyword">instanceof</span> ArrayList&lt;?&gt;) &#123;  <span class="comment">// OK; instanceof requires a reifiable type</span></span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>一般情形下，你不能映射一个参数化类型，除非是不受限的参数化。例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; li = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">List&lt;Number&gt;  ln = (List&lt;Number&gt;) li;  <span class="comment">// compile-time error</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>然而，在一些情况下，编译器知道一个类型参数总是有效的，并运行映射。例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; l1 = ...;</span><br><span class="line">ArrayList&lt;String&gt; l2 = (ArrayList&lt;String&gt;)l1;  <span class="comment">// OK</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>不能创建参数化类型数组</p>
+<p>你不能创建参数化类型数组。例如，下面的代码不能编译：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt;[] arrayOfLists = <span class="keyword">new</span> List&lt;Integer&gt;[<span class="number">2</span>];  <span class="comment">// compile-time error</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>下面的代码演示了如果将不同类型插入进数组会发生什么：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Object[] strings = <span class="keyword">new</span> String[<span class="number">2</span>];</span><br><span class="line">strings[<span class="number">0</span>] = <span class="string">"hi"</span>;   <span class="comment">// OK</span></span><br><span class="line">strings[<span class="number">1</span>] = <span class="number">100</span>;    <span class="comment">// An ArrayStoreException is thrown.</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果你对泛型list做同样的事，将会产生问题：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Object[] stringLists = <span class="keyword">new</span> List&lt;String&gt;[];  <span class="comment">// compiler error, but pretend it's allowed</span></span><br><span class="line">stringLists[<span class="number">0</span>] = <span class="keyword">new</span> ArrayList&lt;String&gt;();   <span class="comment">// OK</span></span><br><span class="line">stringLists[<span class="number">1</span>] = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();  <span class="comment">// An ArrayStoreException should be thrown,</span></span><br><span class="line">                                            <span class="comment">// but the runtime can't detect it.</span></span><br></pre></td></tr></table></figure>
+
+<p>如果允许参数化列表数组，上面的代码将不能抛出希望的ArrayStoreException。</p>
+<p>不能创建，捕获，抛出参数化类型对象</p>
+<p>一个泛型类不能从Throwable类直接或间接扩展。例如，下面的类不会通过编译：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Extends Throwable indirectly</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MathException</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">Exception</span> </span>&#123; <span class="comment">/* ... */</span> &#125;    <span class="comment">// compile-time error</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// Extends Throwable directly</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QueueFullException</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">Throwable</span> </span>&#123; <span class="comment">/* ... */</span> <span class="comment">// compile-time error</span></span><br><span class="line">A method cannot <span class="keyword">catch</span> an instance</span><br></pre></td></tr></table></figure>
+
+<p>一个方法不能捕获类型参数的实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends Exception, J&gt; <span class="function"><span class="keyword">void</span> <span class="title">execute</span><span class="params">(List&lt;J&gt; jobs)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (J job : jobs)</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (T e) &#123;   <span class="comment">// compile-time error</span></span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>你可以在throws子句中使用类型参数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parser</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">Exception</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">parse</span><span class="params">(File file)</span> <span class="keyword">throws</span> T </span>&#123;     <span class="comment">// OK</span></span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>不能重载 形式类型参数擦除后得到相同的原类型的方法</p>
+<p>一个类不能有两个重载的方法，如果它们在类型擦除后得到的方法签名是一样的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(Set&lt;String&gt; strSet)</span> </span>&#123; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(Set&lt;Integer&gt; intSet)</span> </span>&#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这两个重载共享同样的类文件（classfile）的表示，将产生编译错误。</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">sarsae</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2020/08/30/%E6%B3%9B%E5%9E%8B%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/">http://yoursite.com/2020/08/30/%E6%B3%9B%E5%9E%8B%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">SarsaeCola</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/JVM/">JVM</a><a class="post-meta__tags" href="/tags/Java/">Java</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/09/05/AVL%E6%A0%91/"><img class="prev-cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">AVL树</div></div></a></div><div class="next-post pull-right"><a href="/2020/08/29/session%E3%80%81request%E3%80%81%E5%92%8CServletContext%E7%9A%84%E5%8C%BA%E5%88%AB/"><img class="next-cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">session、request、和ServletContext的区别</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 By sarsae</div><div class="framework-info"><span>框架 </span><a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
