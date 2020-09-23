@@ -1,0 +1,169 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>图论算法入门 | SarsaeCola</title><meta name="description" content="本文参考若无初见林东州 基本概念图论是一种表示 “多对多” 的关系 图是由顶点和边组成的：(可以无边，但至少包含一个顶点) 一组顶点：通常用 V(vertex) 表示顶点集合一组边：通常用 E(edge) 表示边的集合图可以分为有向图和无向图，在图中：(v, w) 表示无向边，即 v 和 w 是互通的&lt;v, w&gt; 表示有向边，该边始于 v，终于 w图可以分为有权图和无权图： 有权图：每"><meta name="keywords" content="图论"><meta name="author" content="sarsae"><meta name="copyright" content="sarsae"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://yoursite.com/2020/09/22/%E5%9B%BE%E8%AE%BA%E7%AE%97%E6%B3%95%E5%85%A5%E9%97%A8/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="图论算法入门"><meta property="og:url" content="http://yoursite.com/2020/09/22/%E5%9B%BE%E8%AE%BA%E7%AE%97%E6%B3%95%E5%85%A5%E9%97%A8/"><meta property="og:site_name" content="SarsaeCola"><meta property="og:description" content="本文参考若无初见林东州 基本概念图论是一种表示 “多对多” 的关系 图是由顶点和边组成的：(可以无边，但至少包含一个顶点) 一组顶点：通常用 V(vertex) 表示顶点集合一组边：通常用 E(edge) 表示边的集合图可以分为有向图和无向图，在图中：(v, w) 表示无向边，即 v 和 w 是互通的&lt;v, w&gt; 表示有向边，该边始于 v，终于 w图可以分为有权图和无权图： 有权图：每"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2020-09-22T03:19:37.000Z"><meta property="article:modified_time" content="2020-09-22T05:16:32.307Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isSidebar: true,
+  postUpdate: '2020-09-22 13:16:32'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.1"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">35</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">24</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">11</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本概念"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图的表示方法"><span class="toc-number">2.</span> <span class="toc-text">图的表示方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图的遍历"><span class="toc-number">3.</span> <span class="toc-text">图的遍历</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">SarsaeCola</a></span><span class="pull-right menus"><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">图论算法入门</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-09-22T03:19:37.000Z" title="发表于 2020-09-22 11:19:37">2020-09-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-09-22T05:16:32.307Z" title="更新于 2020-09-22 13:16:32">2020-09-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>本文参考<a href="https://www.jianshu.com/p/cf03e51a3ca2" target="_blank" rel="noopener">若无初见</a><br><a href="https://zhuanlan.zhihu.com/p/25498681" target="_blank" rel="noopener">林东州</a></p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>图论是一种表示 “多对多” 的关系</p>
+<p>图是由顶点和边组成的：(可以无边，但至少包含一个顶点)</p>
+<p>一组顶点：通常用 V(vertex) 表示顶点集合<br>一组边：通常用 E(edge) 表示边的集合<br>图可以分为有向图和无向图，在图中：<br><img src= "/img/loading.gif" data-lazy-src="2020-09-22-12-34-00.png"><br><img src= "/img/loading.gif" data-lazy-src="2020-09-22-12-34-16.png"><br>(v, w) 表示无向边，即 v 和 w 是互通的<br>&lt;v, w&gt; 表示有向边，该边始于 v，终于 w<br>图可以分为有权图和无权图：</p>
+<p>有权图：每条边具有一定的权重(weight)，通常是一个数字<br>无权图：每条边均没有权重，也可以理解为权为 1</p>
+<p>图又可以分为连通图和非连通图：</p>
+<p>连通图：所有的点都有路径相连<br>非连通图：存在某两个点没有路径相连</p>
+<p>图中的顶点有度的概念：<br>度(Degree)：所有与它连接点的个数之和<br>入度(Indegree)：存在于有向图中，所有接入该点的边数之和<br>出度(Outdegree)：存在于有向图中，所有接出该点的边数之和</p>
+<blockquote>
+<p>路径和回路</p>
+</blockquote>
+<p>路径：如果顶点(Vm)到顶点(Vn)之间存在一个顶点序列。则表示Vm到Vn是一条路径。<br>路径长度：路径中”边的数量”。<br>简单路径：若一条路径上顶点不重复出现，则是简单路径。<br>回路：若路径的第一个顶点和最后一个顶点相同，则是回路。<br>简单回路：第一个顶点和最后一个顶点相同，其它各顶点都不重复的回路则是简单回路。</p>
+<blockquote>
+<p>连通图和连通分量</p>
+</blockquote>
+<p>连通图：对无向图而言，任意两个顶点之间都存在一条无向路径，则称该无向图为连通图。 对有向图而言，若图中任意两个顶点之间都存在一条有向路径，则称该有向图为强连通图。</p>
+<p>连通分量：非连通图中的各个连通子图称为该图的连通分量。</p>
+<h2 id="图的表示方法"><a href="#图的表示方法" class="headerlink" title="图的表示方法"></a>图的表示方法</h2><blockquote>
+<p>邻接矩阵</p>
+</blockquote>
+<p><strong>用一个一维数组存放图中所有顶点数据；用一个二维数组存放顶点间关系（边或弧）的数据，这个二维数组称为邻接矩阵。</strong></p>
+<ul>
+<li>在 n 个顶点的图需要有一个 n × n 大小的矩阵</li>
+<li>在一个无权图中，矩阵坐标中每个位置值为 1 代表两个点是相连的，0 表示两点是不相连的</li>
+<li>在一个有权图中，矩阵坐标中每个位置值代表该两点之间的权重，0 表示该两点不相连</li>
+<li>在无向图中，邻接矩阵关于对角线相等</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="2020-09-22-12-39-07.png"><br><img src= "/img/loading.gif" data-lazy-src="2020-09-22-12-39-18.png"><br><img src= "/img/loading.gif" data-lazy-src="2020-09-22-12-39-29.png"></p>
+<blockquote>
+<p>邻接表</p>
+</blockquote>
+<p>对于每个点，存储着一个链表，用来指向所有与该点直接相连的点<br>对于有权图来说，链表中元素值对应着权重<br><img src= "/img/loading.gif" data-lazy-src="2020-09-22-12-58-09.png"><br><img src= "/img/loading.gif" data-lazy-src="2020-09-22-12-58-22.png"><br><img src= "/img/loading.gif" data-lazy-src="2020-09-22-12-56-24.png"></p>
+<h2 id="图的遍历"><a href="#图的遍历" class="headerlink" title="图的遍历"></a>图的遍历</h2><blockquote>
+<p>深度遍历</p>
+</blockquote>
+<p>从图的某个顶点出发，访问图中的所有顶点，且使每个顶点仅被访问一次。这一过程叫做图的遍历。<br>深度优先搜索的思想：<br>①访问顶点v；<br>②依次从v的未被访问的邻接点出发，对图进行深度优先遍历；直至图中和v有路径相通的顶点都被访问；<br>③若此时图中尚有顶点未被访问，则从一个未被访问的顶点出发，重新进行深度优先遍历，直到图中所有顶点均被访问过为止。<br><img src= "/img/loading.gif" data-lazy-src="2020-09-22-13-09-21.png"></p>
+<p><strong>流程：</strong></p>
+<p>☐ 首先输出 V1，标记V1的flag=true;<br>☐ 获得V1的邻接边 [V2 V3],取出V2，标记V2的flag=true;<br>☐ 获得V2的邻接边[V1 V4 V5],过滤掉已经flag的，取出V4，标记V4的flag=true;<br>☐ 获得V4的邻接边[V2 V8],过滤掉已经flag的，取出V8，标记V8的flag=true;<br>☐ 获得V8的邻接边[V4 V5],过滤掉已经flag的，取出V5，标记V5的flag=true;<br>☐ 此时发现V5的所有邻接边都已经被flag了，所以需要回溯。（左边黑色虚线，回溯到V1，回溯就是下层递归结束往回返）<br>☐ 回溯到V1，在前面取出的是V2，现在取出V3，标记V3的flag=true;<br>☐ 获得V3的邻接边[V1 V6 V7]，过滤掉已经flag的,取出V6，标记V6的flag=true;<br>☐ 获得V6的邻接边[V3 V7],过滤掉已经flag的,取出V7，标记V7的flag=true;<br>☐ 此时发现V7的所有邻接边都已经被flag了，所以需要回溯。（右边黑色虚线，回溯到V1，回溯就是下层递归结束往回返）<br><img src= "/img/loading.gif" data-lazy-src="2020-09-22-13-11-27.png"></p>
+<blockquote>
+<p>广度优先遍历</p>
+</blockquote>
+<p>所谓广度，就是一层一层的，向下遍历，层层堵截<br>广度优先搜索的思想：</p>
+<p>① 访问顶点vi ；</p>
+<p>② 访问vi 的所有未被访问的邻接点w1 ,w2 , …wk ；</p>
+<p>③ 依次从这些邻接点（在步骤②中访问的顶点）出发，访问它们的所有未被访问的邻接点; 依此类推，直到图中所有访问过的顶点的邻接点都被访问；</p>
+<p>说明：</p>
+<p>为实现③，需要保存在步骤②中访问的顶点，而且访问这些顶点的邻接点的顺序为：先保存的顶点，其邻接点先被访问。 这里我们就想到了用标准模板库中的queue队列来实现这种先进现出的服务。</p>
+<blockquote>
+<p>说明：</p>
+</blockquote>
+<p>☐将V1加入队列，取出V1，并标记为true(即已经访问)，将其邻接点加进入队列，则 &lt;—[V2 V3]</p>
+<p>☐取出V2，并标记为true(即已经访问)，将其未访问过的邻接点加进入队列，则 &lt;—[V3 V4 V5]</p>
+<p>☐取出V3，并标记为true(即已经访问)，将其未访问过的邻接点加进入队列，则 &lt;—[V4 V5 V6 V7]</p>
+<p>☐取出V4，并标记为true(即已经访问)，将其未访问过的邻接点加进入队列，则 &lt;—[V5 V6 V7 V8]</p>
+<p>☐取出V5，并标记为true(即已经访问)，因为其邻接点已经加入队列，则 &lt;—[V6 V7 V8]</p>
+<p>☐取出V6，并标记为true(即已经访问)，将其未访问过的邻接点加进入队列，则 &lt;—[V7 V8]</p>
+<p>☐取出V7，并标记为true(即已经访问)，将其未访问过的邻接点加进入队列，则 &lt;—[V8]</p>
+<p>☐取出V8，并标记为true(即已经访问)，将其未访问过的邻接点加进入队列，则 &lt;—[]</p>
+<blockquote>
+<p>两种算法的复杂度分析</p>
+</blockquote>
+<ul>
+<li>深度优先</li>
+</ul>
+<p>数组表示：查找所有顶点的所有邻接点所需时间为O(n^2)，n为顶点数，算法时间复杂度为O(n^2) 　　</p>
+<ul>
+<li>广度优先</li>
+</ul>
+<p>数组表示：查找每个顶点的邻接点所需时间为O(n2)，n为顶点数，算法的时间复杂度为O(n^2)</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">sarsae</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2020/09/22/%E5%9B%BE%E8%AE%BA%E7%AE%97%E6%B3%95%E5%85%A5%E9%97%A8/">http://yoursite.com/2020/09/22/%E5%9B%BE%E8%AE%BA%E7%AE%97%E6%B3%95%E5%85%A5%E9%97%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">SarsaeCola</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/09/23/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/"><img class="prev-cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">最小生成树</div></div></a></div><div class="next-post pull-right"><a href="/2020/09/20/%E4%B8%8D%E7%9B%B8%E4%BA%A4%E9%9B%86%E7%B1%BB/"><img class="next-cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">不相交集类</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2020/09/23/拓扑排序/" title="拓扑排序"><img class="relatedPosts_cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-23</div><div class="relatedPosts_title">拓扑排序</div></div></a></div><div class="relatedPosts_item"><a href="/2020/09/23/最小生成树/" title="最小生成树"><img class="relatedPosts_cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-23</div><div class="relatedPosts_title">最小生成树</div></div></a></div><div class="relatedPosts_item"><a href="/2020/09/23/最短路径算法/" title="最短路径算法"><img class="relatedPosts_cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-23</div><div class="relatedPosts_title">最短路径算法</div></div></a></div><div class="relatedPosts_item"><a href="/2020/09/23/深度与广度优先搜索/" title="深度与广度优先搜索"><img class="relatedPosts_cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-23</div><div class="relatedPosts_title">深度与广度优先搜索</div></div></a></div></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 By sarsae</div><div class="framework-info"><span>框架 </span><a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
