@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kotlin常用高级函数总结 | SarsaeCola</title><meta name="description" content="forEach()&#x2F;**  遍历函数 &#x2F;fun forEach() {  val arr &#x3D; intArrayOf(1, 2, 4, 6)  arr.forEach(::println)}  map()&#x2F;**  对集合每一个元素做变换  &#x2F;fun map() {  val arr &#x3D; intArrayOf(1, 2, 4, 6)   arr.map {   &quot;$it nihao&amp;quot"><meta name="author" content="sarsae"><meta name="copyright" content="sarsae"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://yoursite.com/2020/09/28/Kotlin%E5%B8%B8%E7%94%A8%E9%AB%98%E7%BA%A7%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="Kotlin常用高级函数总结"><meta property="og:url" content="http://yoursite.com/2020/09/28/Kotlin%E5%B8%B8%E7%94%A8%E9%AB%98%E7%BA%A7%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/"><meta property="og:site_name" content="SarsaeCola"><meta property="og:description" content="forEach()&#x2F;**  遍历函数 &#x2F;fun forEach() {  val arr &#x3D; intArrayOf(1, 2, 4, 6)  arr.forEach(::println)}  map()&#x2F;**  对集合每一个元素做变换  &#x2F;fun map() {  val arr &#x3D; intArrayOf(1, 2, 4, 6)   arr.map {   &quot;$it nihao&amp;quot"><meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><meta property="article:published_time" content="2020-09-28T07:18:11.000Z"><meta property="article:modified_time" content="2020-09-28T07:23:41.177Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isSidebar: true,
+  postUpdate: '2020-09-28 15:23:41'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.1"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">43</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">28</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">12</div></a></div></div></div><hr/></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#forEach"><span class="toc-number">1.</span> <span class="toc-text">forEach()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map"><span class="toc-number">2.</span> <span class="toc-text">map()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#filter"><span class="toc-number">3.</span> <span class="toc-text">filter()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flatMap"><span class="toc-number">4.</span> <span class="toc-text">flatMap()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reduce"><span class="toc-number">5.</span> <span class="toc-text">reduce()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fold"><span class="toc-number">6.</span> <span class="toc-text">fold()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#takeWhile"><span class="toc-number">7.</span> <span class="toc-text">takeWhile()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#let-run"><span class="toc-number">8.</span> <span class="toc-text">let()&#x2F;run()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#alsoAndApply"><span class="toc-number">9.</span> <span class="toc-text">alsoAndApply()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#takeIf"><span class="toc-number">10.</span> <span class="toc-text">takeIf()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#With"><span class="toc-number">11.</span> <span class="toc-text">With()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Use"><span class="toc-number">12.</span> <span class="toc-text">Use()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#joinToString"><span class="toc-number">13.</span> <span class="toc-text">joinToString()</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">SarsaeCola</a></span><span class="pull-right menus"><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">Kotlin常用高级函数总结</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-09-28T07:18:11.000Z" title="发表于 2020-09-28 15:18:11">2020-09-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-09-28T07:23:41.177Z" title="更新于 2020-09-28 15:23:41">2020-09-28</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="forEach"><a href="#forEach" class="headerlink" title="forEach()"></a>forEach()</h2><p>/**</p>
+<ul>
+<li>遍历函数</li>
+<li>/<br>fun forEach() {<br>  val arr = intArrayOf(1, 2, 4, 6)<br>  arr.forEach(::println)<br>}</li>
+</ul>
+<h2 id="map"><a href="#map" class="headerlink" title="map()"></a>map()</h2><p>/**</p>
+<ul>
+<li><p>对集合每一个元素做变换</p>
+</li>
+<li><p>/<br>fun map() {<br>  val arr = intArrayOf(1, 2, 4, 6)</p>
+<p>  arr.map {</p>
+<pre><code>  &quot;$it nihao&quot;</code></pre>
+<p>  }.forEach(::println)</p>
+</li>
+</ul>
+<p>}</p>
+<h2 id="filter"><a href="#filter" class="headerlink" title="filter()"></a>filter()</h2><p>/**</p>
+<ul>
+<li>根据条件过滤元素</li>
+<li>/<br>fun filter() {<br>  val arr = intArrayOf(1, 2, 4, 6)<br>  arr.filter {<pre><code>  it % 2 == 0</code></pre>
+  }.forEach(::println)</li>
+</ul>
+<p>}</p>
+<h2 id="flatMap"><a href="#flatMap" class="headerlink" title="flatMap()"></a>flatMap()</h2><p>/**</p>
+<ul>
+<li><p>对数组中每个元素变化，铺平后，装进一个新的集合</p>
+</li>
+<li><p>/<br>fun flatMap() {</p>
+<p>  val arr = intArrayOf(1, 2, 4, 6)<br>  val arr2 = intArrayOf(10, 39, 39, 18, 88)<br>  var arr3 = intArrayOf(100, 200, 383, 198)</p>
+<p>  val newArr = arrayListOf(arr, arr2, arr3)<br>  newArr.flatMap { iterator -&gt;</p>
+<pre><code>  iterator.map {
+      it.toString() + &quot;haha&quot;
+  }</code></pre>
+<p>  }.forEach {</p>
+<pre><code>  println(it)</code></pre>
+<p>  }</p>
+</li>
+</ul>
+<p>/*    arr.flatMap {<br>        listOf(it + 1)<br>    }.forEach {<br>        println(it)<br>    }*/</p>
+<p>}</p>
+<h2 id="reduce"><a href="#reduce" class="headerlink" title="reduce()"></a>reduce()</h2><p>/**</p>
+<ul>
+<li><p>从集合左到右，依次计算每个元素累加的结果。</p>
+</li>
+<li><p>/<br>fun reduce() {<br>  val arr = intArrayOf(1, 2, 4, 6)<br>//    求整数的和<br>  val sum = arr.reduce { acc, i -&gt;</p>
+<pre><code>  acc + i</code></pre>
+<p>  }</p>
+<p>  //求阶乘<br>  val factorial = arr.reduce { acc, i -&gt;</p>
+<pre><code>  acc * i</code></pre>
+<p>  }<br>  println(factorial)</p>
+<p>  //将集合拼接成字符串 0,1,2,3,4,5,6<br>  println((0..6).map { it.toString() }.reduce { acc, i -&gt;</p>
+<pre><code>  &quot;$acc,$i&quot;</code></pre>
+<p>  })<br>}</p>
+</li>
+</ul>
+<h2 id="fold"><a href="#fold" class="headerlink" title="fold()"></a>fold()</h2><p>/**</p>
+<ul>
+<li><p>从[初始]值开始累加值，并从左到右对当前累加器值和每个元素应用[操作]。</p>
+</li>
+<li><p>与reduce类似,reduce没有初始值是第一个元素</p>
+</li>
+<li><p>fold必须手动传一个初始值</p>
+</li>
+<li><p>/<br>fun fold() {<br>  val arr = intArrayOf(1, 2, 4, 6)<br>  val fold = arr.fold(2) { acc, i -&gt; acc + i }<br>  println(fold)</p>
+<p>  //将集合拼接成字符串</p>
+<p>  println((0..6).fold(StringBuilder()) { acc, i -&gt;</p>
+<pre><code>  acc.append(i).append(&quot;,&quot;)</code></pre>
+<p>  })</p>
+</li>
+</ul>
+<p>}</p>
+<h2 id="takeWhile"><a href="#takeWhile" class="headerlink" title="takeWhile()"></a>takeWhile()</h2><p>/**</p>
+<ul>
+<li><p>takeWhile和filter一样都是过滤用的函数</p>
+</li>
+<li><p>和filter不同地方在filter总是会遍历当前IntArray的所有元素</p>
+</li>
+<li><p>而takeWhile在第一次发现predict不满足的时候就不再遍历</p>
+</li>
+<li><p>后面的元素即使满足条件也不会加入到结果中</p>
+</li>
+<li><p>/<br>fun takeWhile() {<br>  val arr = intArrayOf(1, 2, 4, 5, 6)</p>
+<p>  arr.takeWhile { it % 2 != 0 }</p>
+<pre><code>  .forEach(::println)</code></pre>
+</li>
+</ul>
+<p>//    take/takeLast<br>//    take是从集合中取前几个元素，takeLast是从集合中取后几个元素。<br>//    takeWhile/takeLastWhile<br>//    takeLastWhiles 是集合从后往前过滤<br>}</p>
+<p>data class User(var name: String, var age: Int)</p>
+<h2 id="let-run"><a href="#let-run" class="headerlink" title="let()/run()"></a>let()/run()</h2><p>/**</p>
+<ul>
+<li><p>let 和run 都会返回闭包执行结果，区别在于let有闭包参数，run没有</p>
+</li>
+<li><p>/<br>fun letAndRun() {<br>  val user = User(“littleGreens”, 18)<br>  val let = user.let { user: User -&gt; user.name }<br>//    val let = user.let {it.name }<br>  println(let)</p>
+<p>  val run = user.run { this.name }<br>  println(run)<br>}</p>
+</li>
+</ul>
+<h2 id="alsoAndApply"><a href="#alsoAndApply" class="headerlink" title="alsoAndApply()"></a>alsoAndApply()</h2><p>/**</p>
+<ul>
+<li><p>also apply 都不返回闭包执行结果,返回的是this（调用者），区别在于also有闭包参数，apply没有</p>
+</li>
+<li><p>/<br>fun alsoAndApply() {<br>  val user = User(“littleGreens”, 18)<br>  user.also { user: User -&gt; user.name = “klaus” }</p>
+<pre><code>  .apply { println(this.name) }</code></pre>
+<p>//    user.also { it.name = “klaus” }</p>
+<p>  user.apply { this.name = “klausCai” }</p>
+<pre><code>  .apply { println(this.name) }</code></pre>
+<p>}</p>
+</li>
+</ul>
+<h2 id="takeIf"><a href="#takeIf" class="headerlink" title="takeIf()"></a>takeIf()</h2><p>/**</p>
+<ul>
+<li>takeIf作为条件过滤，满足条件返回this，否则返回null</li>
+<li>/<br>fun takeIf() {<br>  val arr = intArrayOf(1, 2, 4, 5, 6)<br>  val element = arr.takeIf {<pre><code>  arr.size &gt; 3</code></pre>
+  }?.let {<pre><code>  it[3]</code></pre>
+  }<br>  println(element)<br>}</li>
+</ul>
+<h2 id="With"><a href="#With" class="headerlink" title="With()"></a>With()</h2><p>/**</p>
+<ul>
+<li>with可以让用户省略点号之前的对象引用，with内部的所有操作都是针对with对象</li>
+<li>/<br>fun With() {<br>  val user = User(“littleGreens”, 18)<br>  with(user) {<pre><code>  println(name)
+  name = &quot;klaus&quot;
+  println(name)</code></pre>
+  }</li>
+</ul>
+<p>}</p>
+<h2 id="Use"><a href="#Use" class="headerlink" title="Use()"></a>Use()</h2><p>/**</p>
+<ul>
+<li>use是针对那些实现了Closable接口的对象的扩展方法，也就是大部分的IO操作相关类会有这个扩展高阶方法，</li>
+<li>use内已经捕获了异常，并调用了close方法。</li>
+<li>/<br>fun Use() {<br>  val file = File(“test.txt”)<br>  val bufferReader = BufferedReader(FileReader(file))<br>  bufferReader.use {<pre><code>  it.readLine()</code></pre>
+  }</li>
+</ul>
+<p>}</p>
+<h2 id="joinToString"><a href="#joinToString" class="headerlink" title="joinToString()"></a>joinToString()</h2><p>/**</p>
+<ul>
+<li>joinToString:为集合元素添加分隔符,组成一个新的字符串并返回</li>
+<li>/<br>val joinToStringResult1 = arrayOf(“a”, “b”, “c”, “d”).joinToString { i -&gt; i }<br>val joinToStringResult2 = arrayOf(“a”, “b”, “c”, “d”).joinToString(separator = “#”, prefix = “[前缀]”, postfix = “[后缀]”, limit = 3, truncated = “[省略号]”) { i -&gt; i }<br>println(joinToStringResult1)<br>println(joinToStringResult2)<br>/**</li>
+<li>打印输出</li>
+<li>a, b, c, d</li>
+<li>[前缀]a#b#c#[省略号][后缀]</li>
+<li>/</li>
+</ul>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">sarsae</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yoursite.com/2020/09/28/Kotlin%E5%B8%B8%E7%94%A8%E9%AB%98%E7%BA%A7%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/">http://yoursite.com/2020/09/28/Kotlin%E5%B8%B8%E7%94%A8%E9%AB%98%E7%BA%A7%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yoursite.com" target="_blank">SarsaeCola</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/09/29/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/"><img class="prev-cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">加密算法</div></div></a></div><div class="next-post pull-right"><a href="/2020/09/28/Kotlin%E5%8D%B0%E7%AB%A0%E7%B1%BB/"><img class="next-cover" data-lazy-src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Kotlin印章类</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 By sarsae</div><div class="framework-info"><span>框架 </span><a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
